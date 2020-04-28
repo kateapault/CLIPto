@@ -15,7 +15,7 @@ class Caesar
                 ind = @@alphabet.index(char)
                 encoded_ind = ind + shift_num
                 if encoded_ind > 25
-                    encoded_ind = encoded_ind - 26
+                    encoded_ind -= 26
                 end
                 encoded_message += @@alphabet[encoded_ind]
             end
@@ -23,9 +23,37 @@ class Caesar
         return [encoded_message,shift_num]
     end
 
-    def self.decode() #str - message, optional # of shift
-        # if optional # of shift, decodes message
-        # else prints possible decodes for all letters
+    def self.decode(message,num=nil) #str - message, optional # of shift
+        if num 
+            decoded_message = ''
+            for i in 0...message.length
+                char = message[i]
+                char_ind = @@alphabet.index(char)
+                decoded_ind = char_ind - num.to_i
+                if decoded_ind < 0
+                    decoded_ind += 26
+                end
+                decoded_message += @@alphabet[decoded_ind]
+            end
+            return decoded_message
+        else
+            possible_messages = {}
+            for i in 0...message.length
+                char = message[i]
+                char_ind = @@alphabet.index(char)
+                for j in 0..25
+                    encoded_ind = char_ind - j
+                    if encoded_ind > 25
+                        encoded_ind += 26
+                    end
+                    if possible_messages[j]
+                        possible_messages[j] += @@alphabet[encoded_ind]
+                    else
+                        possible_messages[j] = @@alphabet[encoded_ind]
+                    end
+                end
+            end
+            return possible_messages.values
+        end
     end
-
 end

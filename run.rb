@@ -22,7 +22,25 @@ when "Encode"
         "Error: How did you even select this"
     end
 when "Decode"
-    puts "not built yet"
+    user_message = prompt.ask("Enter the message you'd like to decode: ")
+    cipher = prompt.select("Which cipher was your message written with?", ciphers)
+    case cipher
+    when "Caesar"
+        if prompt.yes?("Do you know the message's shift number?")
+            shift_num = prompt.ask("What is the shift number? ")
+            decoded_message = Caesar.decode(user_message,shift_num)
+            puts "Your decoded message is:"
+            puts decoded_message
+        else
+            decoded_message = Caesar.decode(user_message)
+            puts "Your possible messages are:"
+            puts decoded_message
+        end
+    when "Placeholder"
+        puts "this is really just a placeholder"
+    else
+        "Error: How did you even select this"
+    end
 when "Ciphers"
     puts "you chose 'Ciphers' - this page is coming soon!"
 when "Exit"
