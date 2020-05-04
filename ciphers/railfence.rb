@@ -14,7 +14,7 @@ class Railfence
 
     def self.decode(message,rail_num=nil)
         if rail_num
-
+            
         else 
 
         end

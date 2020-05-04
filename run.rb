@@ -1,9 +1,10 @@
 require_relative './ciphers/caesar'
 require_relative './ciphers/railfence'
+require_relative './ciphers/vigenere'
 require 'tty-prompt'
 
 prompt = TTY::Prompt.new
-ciphers = %w(Caesar Railfence Placeholder)
+ciphers = %w(Caesar Vigenere Railfence Placeholder)
 exit_app = false
 
 puts "welcome to CLIpto!"
@@ -19,6 +20,9 @@ until exit_app
         when "Caesar"
             message, num = Caesar.encode(user_message)
             puts "with a shift of #{num}, your secret message is: #{message}"
+        when "Vigenere"
+            message = Vigenere.encode(user_message,"bubbly")
+            puts "Your secret message is: #{message}"
         when "Railfence"
             message, num = Railfence.encode(user_message)
             puts "Your rail number is #{num} and your secret message is: #{message}"
@@ -51,6 +55,10 @@ until exit_app
                 puts "Your possible messages are: "
                 puts decoded_message
             end
+        when "Vigenere"
+            decoded_message = Vigenere.decode(user_message,"bubbly")
+            puts "Your decoded message is: "
+            puts decoded_message
         else
             "Error: How did you even select this"
         end
